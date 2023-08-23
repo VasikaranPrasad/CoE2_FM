@@ -12,10 +12,10 @@ function App() {
   return (
    <BrowserRouter>
    <Routes>
-    <Route path='/' element={<VncUserLogin />} />
+    <Route path='/vnc' element={<VncUserLogin />} />
     <Route path='welcome' element={<Welcome />} />
     <Route path='createrun' element={<CreateRun />} />
-    <Route path='login' element={<SshCredentials />} />
+    <Route path='/' element={<SshCredentials />} />
     <Route path='DirectoryExplorer' element={<DirectoryExplorer />} />
    </Routes>
    </BrowserRouter>

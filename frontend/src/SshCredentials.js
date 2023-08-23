@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './SshCredentials.css'; // Import your CSS file for styling
+import Backendapi from './Backendapi';
 
 function SshCredentials() {
   const [sshUsername, setSshUsername] = useState('');
@@ -13,7 +14,8 @@ function SshCredentials() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:443/verify-ssh-credentials', {
+      // const response = await axios.post('http://localhost:443/verify-ssh-credentials', {
+        const response = await axios.post(`${Backendapi.REACT_APP_BACKEND_API_URL}/verify-ssh-credentials`, {
         username: sshUsername,
         password: sshPassword,
       });
@@ -50,7 +52,7 @@ function SshCredentials() {
           <div className="input-group">
             <label>SSH Password:</label>
             <input
-              type="text"
+              type="password" // Change input type to password
               value={sshPassword}
               onChange={(event) => setSshPassword(event.target.value)}
               placeholder="SSH Password"
@@ -59,6 +61,9 @@ function SshCredentials() {
           </div>
           <button type="submit">Verify SSH Credentials</button>
         </form>
+        <p className={`verification-message ${verificationResult === 'Incorrect SSH credentials' ? 'incorrect-message' : ''}`}>
+          {verificationResult}
+        </p>
       </div>
     </div>
   );

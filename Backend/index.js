@@ -2,13 +2,16 @@ const express = require('express');
 const cors = require('cors');
 const ssh2 = require('ssh2');
 const fs = require('fs').promises;
+const path = require("path");
 
 
 const app = express();
-const port = process.env.PORT || 443;
+const port = process.env.PORT || 9015;
 
 app.use(cors());
 app.use(express.json());
+
+
 
 
 // SSH Configuration for fetchusers
@@ -195,6 +198,23 @@ app.post("/save-file", async (req, res) => {
   }
 });
 
+
+// build file script
+
+const _dirname = path.dirname("")
+const builPath = path.join(_dirname, "../frontend/build");
+// app.use(express.static(builPath))
+app.use(express.static(path.join(builPath)));
+app.get("/*", function (req, res) {
+  res.sendFile('index.html',
+    { root: path.join(_dirname, "../frontend/build") },
+    function (err) {
+      if (err) {
+        res.status(500).send(err) 
+      }
+    }
+  );
+})
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
